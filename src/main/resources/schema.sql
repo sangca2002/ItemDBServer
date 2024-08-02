@@ -1,4 +1,4 @@
-CREATE TABLE IF NOT EXISTS sorted_item_stack
+CREATE TABLE IF NOT EXISTS serialized_item_stack
 (
     id                   INT          NOT NULL AUTO_INCREMENT,
     item_category        VARCHAR(255) NOT NULL,
@@ -7,4 +7,5 @@ CREATE TABLE IF NOT EXISTS sorted_item_stack
     PRIMARY KEY(id)
 );
 
-CREATE UNIQUE INDEX IF NOT EXISTS unique_id ON sorted_item_stack (item_category, item_key);
+CREATE SEQUENCE IF NOT EXISTS serialized_item_stack_seq START WITH 1 INCREMENT BY 50;
+CREATE UNIQUE INDEX IF NOT EXISTS unique_id ON serialized_item_stack (item_category, item_key);

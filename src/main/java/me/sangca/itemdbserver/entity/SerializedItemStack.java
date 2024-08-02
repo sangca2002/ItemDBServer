@@ -8,8 +8,8 @@ import jakarta.persistence.Id;
 
 import java.io.Serializable;
 
-@Entity(name = "sorted_item_stack")
-public class SortedItemStack implements Serializable {
+@Entity(name = "serialized_item_stack")
+public class SerializedItemStack implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -23,9 +23,9 @@ public class SortedItemStack implements Serializable {
 
     private String itemStackAsString;
 
-    public SortedItemStack() {}
+    public SerializedItemStack() {}
 
-    public SortedItemStack(String category, String key, String itemStackAsString) {
+    public SerializedItemStack(String category, String key, String itemStackAsString) {
         this.category = category;
         this.key = key;
         this.itemStackAsString = itemStackAsString;

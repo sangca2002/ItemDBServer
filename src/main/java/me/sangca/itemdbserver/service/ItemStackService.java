@@ -1,7 +1,7 @@
 package me.sangca.itemdbserver.service;
 
-import me.sangca.itemdbserver.entity.SortedItemStack;
-import me.sangca.itemdbserver.repository.SortedItemStackRepository;
+import me.sangca.itemdbserver.entity.SerializedItemStack;
+import me.sangca.itemdbserver.repository.SerializedItemStackRepository;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
@@ -13,41 +13,29 @@ import java.util.List;
 @Service
 public class ItemStackService {
 
-    public final SortedItemStackRepository sortedItemStackRepository;
+    public final SerializedItemStackRepository serializedItemStackRepository;
 
-    public ItemStackService(SortedItemStackRepository sortedItemStackRepository) {
-        this.sortedItemStackRepository = sortedItemStackRepository;
+    public ItemStackService(SerializedItemStackRepository serializedItemStackRepository) {
+        this.serializedItemStackRepository = serializedItemStackRepository;
     }
 
-    public List<SortedItemStack> getItemList(int page) {
+    public List<SerializedItemStack> getItemList(int page) {
         List<Sort.Order> sorts = new ArrayList<>();
         sorts.add(Sort.Order.desc("id"));
         Pageable pageable = PageRequest.of(page-1, 10, Sort.by(sorts));
-//        List<SortedItemStack> itemStackList = this.sortedItemStackRepository.findAll(pageable).getContent();
-//        HashMap<ArrayList<String>,String> itemMap = new HashMap<>();
-//
-//        int i = 0;
-//        while (i < itemStackList.size()) {
-//            ArrayList<String> categoryAndKeyAsList = new ArrayList<>();
-//            categoryAndKeyAsList.add(itemStackList.get(i).getCategory());
-//            categoryAndKeyAsList.add(itemStackList.get(i).getKey());
-//            itemMap.put(categoryAndKeyAsList,itemStackList.get(i).getItemStackAsString());
-//            i += 1;
-//        }
-//        return itemMap;
-        return this.sortedItemStackRepository.findAll(pageable).getContent();
+        return this.serializedItemStackRepository.findAll(pageable).getContent();
     }
 
     public void saveItem(String category, String key, String itemStackAsString) {
-        sortedItemStackRepository.save(new SortedItemStack(category, key, itemStackAsString));
+        serializedItemStackRepository.save(new SerializedItemStack(category, key, itemStackAsString));
     }
 
     public void deleteItem(String category, String key) {
-        sortedItemStackRepository.deleteByCategoryAndKey(category, key);
+        serializedItemStackRepository.deleteByCategoryAndKey(category, key);
     }
 
     public String getItem(String category, String key) {
-        return sortedItemStackRepository
+        return serializedItemStackRepository
             .findByCategoryAndKey(category, key)
             .getItemStackAsString();
     }
